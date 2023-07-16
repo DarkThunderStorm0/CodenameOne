@@ -357,7 +357,16 @@ public final class StringBuffer implements CharSequence, Appendable {
     }
 
     public CharSequence subSequence(int start, int end) {
-        return internal.substring(start, end);
+        if (this instanceof String) {
+            return ((String) this).substring(start, end);
+        } else {
+            int len = end - start;
+            char seq[] = new char[len];
+            for (int i = 0; i < len; i++) {
+                seq[i] = charAt(start + i);
+            }
+        return new String(seq);
+        }
     }
 
 
